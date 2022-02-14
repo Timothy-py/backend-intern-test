@@ -8,5 +8,4 @@ node_modules
 yarn-error.log
 .yarn/*
 .pnp.*
-yarn.lock
 .editorconfig
