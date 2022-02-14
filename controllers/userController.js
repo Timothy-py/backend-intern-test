@@ -1,9 +1,14 @@
+// ##########################################################################
 const models = require('../models');
 const bcrypt = require('bcrypt');
 const {body, validationResult} = require('express-validator');
 
 // import utility
 const jwtGenerator = require('../utils/jwtGenerator')
+
+// ##########################################################################
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 // handle user signup
 exports.signup = [
@@ -68,6 +73,8 @@ exports.signup = [
     }
 ]
 
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 // handle user signin
 exports.signin = async (req, res) => {
     try {
@@ -121,6 +128,9 @@ exports.signin = async (req, res) => {
     }
 }
 
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 // validator function to validate request body object
 function validator(){
     return[
@@ -145,3 +155,4 @@ function validator(){
         .isMobilePhone().withMessage("Not a valid phone number")
     ]
 }
+// $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
