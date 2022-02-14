@@ -7,11 +7,21 @@
     "dialect": "postgres",
     "port": 5432
   },
-  "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
+  "test": {
+    "username": "timothy",
+    "password": "plati442",
+    "database": "backend_intern_test_db",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres",
+    "port": 5432
+  },
+  "production": {
+    "username": "timothy",
+    "password": "plati442",
+    "database": "shape_calculator",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres",
+    "use_env_variable": "DATABASE_URL"
   }
 }
