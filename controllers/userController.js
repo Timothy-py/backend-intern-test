@@ -2,6 +2,9 @@ const models = require('../models');
 const bcrypt = require('bcrypt');
 const {body, validationResult} = require('express-validator');
 
+// import utility
+const jwtGenerator = require('../utils/jwtGenerator')
+
 // handle user signup
 exports.signup = [
     // execute validator function
@@ -30,7 +33,7 @@ exports.signup = [
             where: {email: email}
         })
         if(user){
-            res.status(409).json({
+            return res.status(409).json({
                 message: "User already exist",
                 status: false
             })
@@ -64,6 +67,59 @@ exports.signup = [
             })
     }
 ]
+
+// handle user signin
+exports.signin = async (req, res) => {
+    try {
+        // destructure request body
+        const {email, password} = req.body
+
+        // validate user and password field is not empty
+        if(!email || !password){
+            return res.status(400).json({
+                message: "Email/Password field cannot be empty",
+                status: false
+            })
+        }
+
+        // check if user exist: if YES continue signup ELSE abort
+        let user = await models.user.findOne({
+            where: {email: email}
+        })
+        if(!user){
+            return res.status(401).json({
+                message: "User does not exist",
+                status: false
+            })
+        };
+
+        // validate user password
+        const validPassword = await bcrypt.compare(password, user.password);
+
+        // if user password is incorrect
+        if(!validPassword){
+           return res.status(401).json({
+                message: "Incorrect Password",
+                status: false
+            })
+        };
+
+        // generate jwt for user
+        const token = jwtGenerator(user.id)
+
+        return res.status(200).json({
+            message: `Logged in successfully as ${user.email}`,
+            status: true,
+            token: token
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            status: false,
+            message: error.message || "Internal server error"
+        })
+    }
+}
 
 // validator function to validate request body object
 function validator(){
